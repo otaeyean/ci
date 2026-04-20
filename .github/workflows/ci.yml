@@ -1,26 +1,25 @@
-[cite_start]name: Node.js CI/CD # 워크플로우의 이름 [cite: 234]
+name: Node.js CI
 
-[cite_start]on: # 언제 이 작업을 실행할지 정의 [cite: 197, 236]
+on:
   push:
-    branches: [ master ] # master 브랜치에 코드가 올라올 때 실행
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
-[cite_start]jobs: # 실행할 작업들의 집합 [cite: 203, 237]
+jobs:
   build-and-push:
-    [cite_start]runs-on: ubuntu-latest # 어떤 운영체제에서 실행할지 결정 (리눅스 환경 사용) [cite: 239]
-    
-    [cite_start]steps: # 구체적인 실행 단계들 [cite: 240]
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Checkout code
-        [cite_start]uses: actions/checkout@v4 # GitHub 서버로 내 코드를 가져오는 단계 [cite: 316]
+        uses: actions/checkout@v4
 
       - name: Install dependencies
-        [cite_start]run: npm install # 필요한 라이브러리 설치 [cite: 298]
+        run: npm install
 
       - name: Run build
-        [cite_start]run: npm run build # 코드가 정상적으로 빌드되는지 확인 [cite: 299]
-      
+        run: npm run build
+
       - name: Generate version
         id: version
-        run: |
-          echo "version=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT # 고유한 버전 번호 생성
+        run: echo "version=${GITHUB_SHA::7}" >> $GITHUB_OUTPUT
